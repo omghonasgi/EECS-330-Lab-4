@@ -100,19 +100,31 @@ class MyQueue : private MyVector<DataType>
     // insert x into the queue
     void enqueue(const DataType & x) 
     {
+        if (this->empty()) {
+            this->resize(1);
+            dataStart = 0;
+            dataEnd = 0;
+            this->data[0] = x;
+        } else {
             this->resize(this->theSize + 1);
             dataEnd = (dataEnd + 1) % this->theCapacity;
             this->data[dataEnd] = x;
-        
+        }
     }
 
     // insert x into the queue
     void enqueue(DataType && x) 
     {
-    
+        if (this->empty()) {
+            this->resize(1);
+            dataStart = 0;
+            dataEnd = 0;
+            this->data[0] = std::move(x);
+        } else {
             this->resize(this->theSize + 1);
             dataEnd = (dataEnd + 1) % this->theCapacity;
             this->data[dataEnd] = std::move(x);
+        }
     }
 
     // remove the first element from the queue
